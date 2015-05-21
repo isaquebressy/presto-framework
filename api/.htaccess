@@ -1,0 +1,10 @@
+#<Limit GET POST PUT DELETE>
+#  Allow from all
+#</Limit>
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+	RewriteBase /api/
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^(.*)$ index.php?load=$1 [QSA,NC,L]
+</IfModule>

@@ -1,5 +1,5 @@
 <?php
 define ('DB_HOST',  'localhost');
-define ('DB_NAME',  'booksdb');
-define ('DB_USER',  'booksuser');
-define ('DB_PASS',  'skoobpassword');
+define ('DB_NAME', 	'');
+define ('DB_USER',  '');
+define ('DB_PASS',  '');

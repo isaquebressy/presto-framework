@@ -23,6 +23,8 @@ class Model {
     }
     
     public function get() {
+        $this->getTable();
+        
         $sql = "SELECT id,";
         
         foreach (array_keys($this->getChildVars()) as $key) {
@@ -30,7 +32,7 @@ class Model {
         }
         
         $sql = rtrim($sql, ',');
-        $sql .= " FROM users WHERE 1=1";
+        $sql .= " FROM {$this->getTable()} WHERE 1=1";
         if (isset($this->id) && $this->id != null) {
             $sql .= " AND id=$this->id";
         } 
@@ -50,7 +52,7 @@ class Model {
     }
     
     public function post() {
-        $sql = "INSERT INTO users (";
+        $sql = "INSERT INTO {$this->getTable()} (";
         foreach (array_merge(array_keys($this->getChildVars()),array_keys($this->getPrivates())) as $key) {
             $sql .= "$key,";
         }
@@ -75,30 +77,34 @@ class Model {
             die("Erro! Parâmetros insuficientes");
         }
         
-        $sql  = "UPDATE users";
-        $sql .= " SET";
-        
-        foreach (array_merge(array_keys($this->getChildVars()),array_keys($this->getPrivates())) as $key) {
-            $method = "get".ucwords($key);
-            if ($this->$method()) {
-                $sql .= " $key = :$key,";
+        try {
+            $sql  = "UPDATE {$this->getTable()}";
+            $sql .= " SET";
+
+            foreach (array_merge(array_keys($this->getChildVars()),array_keys($this->getPrivates())) as $key) {
+                $method = "get".ucwords($key);
+                if ($this->$method()) {
+                    $sql .= " $key = :$key,";
+                }
             }
-        }
-        
-        $sql = rtrim($sql, ",");
-        $sql .= " WHERE id = :id";
-        
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(':id', $this->id);
-        
-        foreach (array_merge($this->getChildVars(),$this->getPrivates()) as $key => $value) {
-            $method = "get".ucwords($key);
-            if ($this->$method()) {
-                $stmt->bindParam(":$key", $this->$method());
+
+            $sql = rtrim($sql, ",");
+            $sql .= " WHERE id = :id";
+
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':id', $this->id);
+
+            foreach (array_merge($this->getChildVars(),$this->getPrivates()) as $key => $value) {
+                $method = "get".ucwords($key);
+                if ($this->$method()) {
+                    $stmt->bindParam(":$key", $this->$method());
+                }
             }
+
+            $stmt->execute();
+        } catch (Exception $e){
+            echo 'Exceção capturada: ',  $e->getMessage(), "\n";
         }
-        
-        $stmt->execute();
     }
     
      public function delete() {
@@ -106,7 +112,7 @@ class Model {
             die("Erro! Identificador não informado!");
         }
         
-        $sql = "DELETE FROM users WHERE id = :id";
+        $sql = "DELETE FROM {$this->getTable()} WHERE id = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':id', $this->id);
         
@@ -150,5 +156,12 @@ class Model {
             $empty = true;
         }
         return $empty;
+    }
+    
+    /*
+     * Return the table name. The class name in the plural
+     */
+    private function getTable() {
+        return strtolower(get_class($this))."s";
     }
 }

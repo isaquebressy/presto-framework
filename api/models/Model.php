@@ -71,7 +71,6 @@ class Model {
     }
     
     public function put() {
-        
         if ($this->is_empty()) {
             die("Erro! Parâmetros insuficientes");
         }
@@ -80,7 +79,10 @@ class Model {
         $sql .= " SET";
         
         foreach (array_merge(array_keys($this->getChildVars()),array_keys($this->getPrivates())) as $key) {
-            $sql .= " $key = :$key,";
+            $method = "get".ucwords($key);
+            if ($this->$method()) {
+                $sql .= " $key = :$key,";
+            }
         }
         
         $sql = rtrim($sql, ",");
@@ -90,13 +92,24 @@ class Model {
         $stmt->bindParam(':id', $this->id);
         
         foreach (array_merge($this->getChildVars(),$this->getPrivates()) as $key => $value) {
-            $stmt->bindParam(":$key", $value);
+            $method = "get".ucwords($key);
+            if ($this->$method()) {
+                $stmt->bindParam(":$key", $this->$method());
+            }
         }
         
-//        var_dump($stmt);
-//        var_dump(array_merge($this->getChildVars(),$this->getPrivates()));
+        $stmt->execute();
+    }
+    
+     public function delete() {
+        if (!$this->id) {
+            die("Erro! Identificador não informado!");
+        }
         
-//        echo $sql;
+        $sql = "DELETE FROM users WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id', $this->id);
+        
         $stmt->execute();
     }
     
@@ -133,7 +146,7 @@ class Model {
      *  */
     private function is_empty() {
         $empty = false;
-        if (!count($this->getChildVars()) && !count($this->getPrivates())) {
+        if (!count(array_filter(array_merge($this->getChildVars(),$this->getPrivates())))) {
             $empty = true;
         }
         return $empty;

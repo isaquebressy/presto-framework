@@ -9,10 +9,10 @@ The idea behind our framework is simplify the development where the developer ha
 
 The restfull api consist into 4 methods to controll your system:
 
-* GET: READ the data based in your model. If you want to list all rows from correspondent table, you may call the url without any parameter: ```http://api.myurl/```; else if you want to get a specific row data you may call passing it id: ```http://api.myurl/id```;
-* POST: CREATE a new entry on the correspondent model table. You need to pass the required fields through the http content data;
-* PUT: UPDATE an especific row based on given id. You need to pass all the fields you want to update though the http content data. It is necessary to inform the id at the end of url ```PUT: http://api.myurl/id```;
-* DELETE: DELETE a given row through the id at the end of url.
+* *GET*: READ the data based in your model. If you want to list all rows from correspondent table, you may call the url without any parameter: ```http://api.myurl/```; else if you want to get a specific row data you may call passing it id: ```http://api.myurl/id```;
+* *POST*: CREATE a new entry on the correspondent model table. You need to pass the required fields through the http content data;
+* *PUT*: UPDATE an especific row based on given id. You need to pass all the fields you want to update though the http content data. It is necessary to inform the id at the end of url ```PUT: http://api.myurl/id```;
+* *DELETE*: DELETE a given row through the id at the end of url.
 
 ### HOW TO USE
 
@@ -26,6 +26,8 @@ If you want to use this framework you need to clone this repository or download 
 
 You can test your api using the curl program passing ```-X``` parameter informing the HTTP REQUEST METHOD and passing the data though the ```--data``` parameter when necessary.
 ```curl -x POST http://api.myurl/ --data {"key1":"value1", "key2":"value2"}```.
+
+You may use the [Postman Chrome Extension] (https://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm) to test the api.
 
 ### JSON TRANSFER
 

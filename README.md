@@ -45,3 +45,8 @@ There is a list of things I hope to implement into this framework. That is it:
 2. Authenticate the user and generate tokens to access the api;
 3. Separate private and public methods to use or not the token auth;
 4. Create a way to get '1 to n' and 'm to n' relationship on database; 
+5. Create filter. Like ```http://api.myurl/users/1?nome=John```, ```http://api.myurl/users/?id=(type:in,10,26,88)``` and ```http://api.myurl/log/?date=(type:between,2015-05-20,2015-05-22)```;
+6. Create pagination. Like ```http://api.myurl/clientes/?offset=0&limit=20``` or ```http://api.myurl/clientes/?pagination=(0,20)```. 
+
+
+

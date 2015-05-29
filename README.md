@@ -25,7 +25,7 @@ If you want to use this framework you need to clone this repository or download 
 ### HOW TO TEST
 
 You can test your api using the curl program passing ```-X``` parameter informing the HTTP REQUEST METHOD and passing the data though the ```--data``` parameter when necessary.
-```curl -x POST http://api.myurl/ --data {"key1":"value1", "key2":"value2"}```.
+```curl -X POST http://api.myurl/ --data {"key1":"value1", "key2":"value2"}```.
 
 You may use the [Postman Chrome Extension](https://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm) to test the api.
 

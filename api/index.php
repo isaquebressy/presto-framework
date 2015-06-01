@@ -7,8 +7,9 @@
  */
 define ('DS', DIRECTORY_SEPARATOR);
 define ('HOME', __DIR__);
+define ('VERSION', '0.1');
 
-if(in_array($_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1'))
+if(in_array($_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1')))
 {
     define('ENVIROMENT', 'DESE');
     ini_set ('display_errors', 1);

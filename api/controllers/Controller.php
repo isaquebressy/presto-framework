@@ -5,7 +5,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 class Controller {
     protected $model;
     protected $modelName;
@@ -16,19 +15,33 @@ class Controller {
         $this->model = new $this->modelName();
         $this->action = $action;
     }
+
+    /**
+     * Write a assoc array as json to cliente includin the header 'Content-Type application/json;charset=utf-8
+     *
+     *
+     */
+    private function response_as_json($assoc_array)
+    {
+        header('Content-Type application/json;charset=utf-8');
+        echo json_encode($assoc_array);
+    }
     
     public function GET($query) {
         if (isset($query) && isset($query[0])) {
+            /* o id nao pode ser texto ? como um UUID ? */
             if (count($query) == 1 && is_numeric($query[0])) {
                 $this->model->setId($query[0]);
             }
         }
         
         $result = $this->model->get();
-        echo json_encode($result);
+
+        $this->response_as_json($result);
     }
     
     public function POST() {
+        /* read the post data as json text */
         $data = file_get_contents("php://input");
         $array = json_decode($data,true);
         $error = json_last_error();

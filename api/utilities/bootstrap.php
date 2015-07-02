@@ -1,6 +1,5 @@
 <?php
 
-$controller = "books";
 $action = $_SERVER['REQUEST_METHOD'];
 $query = null;
 
@@ -8,7 +7,8 @@ if (isset($_REQUEST['load'])) {
     $params = array();
     $params = explode("/", $_REQUEST['load']);
     
-    $controller = ucwords($params[0]);
+    $singular = Inflect::singularize($params[0]);
+    $controller = ucwords(($singular === $params[0]) ? null : $singular);
     $query = array_slice($params, 1);
     
     $modelName = $controller;

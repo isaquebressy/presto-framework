@@ -1,9 +1,16 @@
 <?php
+/**
+ * File: utilities/bootstrap.php
+ *
+ *
+ *
+ */
 
 $action = $_SERVER['REQUEST_METHOD'];
 $query = null;
 
-if (isset($_REQUEST['load'])) {
+if (isset($_REQUEST['load']))
+{
     $params = array();
     $params = explode("/", $_REQUEST['load']);
     

@@ -13,7 +13,7 @@ $query = null;
 if (isset($_REQUEST['load']))
 {
     $params = array();
-    $params = explode("/", $_REQUEST['load']);
+    $params = explode('/', $_REQUEST['load']);
     
     $controller = ucwords($params[0]);
     $query = array_slice($params, 1);

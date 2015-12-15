@@ -1,6 +1,21 @@
 <?php
+/**
+ * Controllers functionalitys
+ *
+ *  PHP version 4
+ *
+ *  @category Utility
+ *  @package  Utility
+ *  @author   Isaque Bressy <isaquebressy@gmail.com>
+ *  @license  https://www.gnu.org/licenses/gpl.html GNU
+ *  @version  GIT: 0.0.1
+ */
 
-/* 
+define('DS', DIRECTORY_SEPARATOR);
+define('HOME', __DIR__);
+
+
+/** 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -10,7 +25,8 @@ class Controller {
     protected $modelName;
     protected $action;
 
-    public function __construct($modelName, $action) {
+    public function __construct($modelName, $action) 
+    {
         $this->modelName = $modelName;
         $this->model = new $this->modelName();
         $this->action = $action;
@@ -19,11 +35,11 @@ class Controller {
     /**
      * Write a assoc array as json to cliente includin the header 'Content-Type application/json;charset=utf-8
      *
-     *
+     * @parameter $assoc_array Object or assoc array to result
      */
     private function response_as_json($assoc_array)
     {
-        header('Content-Type application/json;charset=utf-8');
+        header('Content-Type: application/json;charset=utf-8');
         echo json_encode($assoc_array);
     }
     

@@ -28,7 +28,7 @@ if (isset($_REQUEST['load']))
     $controller .= "Controller";
     $controllerFileName = HOME . DS . 'controllers' . DS 
         . strtolower($controller) . '.php';
-    if (file_exists($controllerFileName)) {
+    if (!file_exists($controllerFileName)) {
         http_response_code(404);
     } else {
         $load = new $controller($modelName, $action);

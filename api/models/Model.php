@@ -10,6 +10,16 @@ class Model {
     protected $db;
     protected $sql;
     
+    public function __get($name)
+    {
+        return $this->$name;
+    }
+
+    public function __set($name, $value)
+    {
+        $this->$name = $value;
+    }
+
     public function __construct() {
         $this->db = Db::init();
     }
@@ -120,7 +130,10 @@ class Model {
     
     /*
      * Get the private properties from Child Class Instance. 
-     *  */
+     * Wee need use private fields to do not expose 
+     * same fields.
+     * OBS: Privates fields will not exposed 
+     */
     private function getPrivates() {
         $reflection = new ReflectionClass($this);
         $vars = $reflection->getProperties(ReflectionProperty::IS_PRIVATE);

@@ -34,13 +34,13 @@ require_once HOME . DS . 'utilities' . DS . 'bootstrap.php';
 function __autoload($class)
 {
     if (file_exists(HOME . DS . 'utilities' . DS . strtolower($class) . '.php')) {
-        include_once HOME . DS . 'utilities' . DS 
+        include HOME . DS . 'utilities' . DS 
             . strtolower($class) . '.php';
     } else if (file_exists(HOME . DS . 'models' . DS . strtolower($class) . '.php')) {
-        include_once HOME . DS . 'models' . DS 
+        include HOME . DS . 'models' . DS 
             . strtolower($class) . '.php';
     } else if (file_exists(HOME . DS . 'controllers' . DS . strtolower($class) . '.php')) {
-        include_once HOME . DS . 'controllers'  . DS 
+        include HOME . DS . 'controllers'  . DS 
             . strtolower($class) . '.php';
     } else {
         http_response_code(500);

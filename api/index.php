@@ -32,16 +32,16 @@ require_once HOME . DS . 'utilities' . DS . 'bootstrap.php';
  * @return 
  */
 function __autoload($class)
-{
-    if (file_exists(HOME . DS . 'utilities' . DS . strtolower($class) . '.php')) {
+{    
+    if (file_exists(HOME . DS . 'utilities' . DS . $class . '.php')) {
         include HOME . DS . 'utilities' . DS 
-            . strtolower($class) . '.php';
-    } else if (file_exists(HOME . DS . 'models' . DS . strtolower($class) . '.php')) {
+            . $class . '.php';
+    } else if (file_exists(HOME . DS . 'models' . DS . $class . '.php')) {
         include HOME . DS . 'models' . DS 
-            . strtolower($class) . '.php';
-    } else if (file_exists(HOME . DS . 'controllers' . DS . strtolower($class) . '.php')) {
-        include HOME . DS . 'controllers'  . DS 
-            . strtolower($class) . '.php';
+            . $class . '.php';
+    } else if (file_exists(HOME . DS . 'controllers' . DS . $class . '.php')) {
+        include HOME . DS . 'controllers' . DS 
+            . $class . '.php';
     } else {
         http_response_code(500);
     }

@@ -9,8 +9,7 @@
 #bash_version    :4.1.5(1)-release
 #==============================================================================
 set -eu
-
-docker ps -q | xargs docker stop
+docker-compose down
 docker ps -aq | xargs docker rm
 
 exit 0

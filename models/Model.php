@@ -21,6 +21,20 @@ class Model {
         $this->id = $id;
     }
     
+    public function set($key, $value) {
+        $refObject   = new ReflectionObject( $this );
+        $refProperty = $refObject->getProperty( $key );
+        $refProperty->setAccessible( true );
+        $refProperty->setValue($this, $value);
+    }
+    
+    public function getValue($reflection, $key) {
+        $p = $reflection->getProperty($key);
+        $p->setAccessible(true);
+        
+        return $p->getValue($this);
+    }
+    
     public function get() {
         $this->getTable();
         
@@ -77,12 +91,13 @@ class Model {
         }
         
         try {
+            $reflection = new ReflectionClass($this);
+            
             $sql  = "UPDATE {$this->getTable()}";
             $sql .= " SET";
 
             foreach (array_merge(array_keys($this->getChildVars()),array_keys($this->getPrivates())) as $key) {
-                $method = "get".ucwords($key);
-                if ($this->$method()) {
+                if ($this->getValue($reflection, $key)) {
                     $sql .= " $key = :$key,";
                 }
             }
@@ -94,9 +109,8 @@ class Model {
             $stmt->bindParam(':id', $this->id);
 
             foreach (array_merge($this->getChildVars(),$this->getPrivates()) as $key => $value) {
-                $method = "get".ucwords($key);
-                if ($this->$method()) {
-                    $stmt->bindParam(":$key", $this->$method());
+                if ($this->getValue($reflection, $key)) {
+                    $stmt->bindParam(":$key", $this->getValue($reflection, $key));
                 }
             }
 
@@ -129,8 +143,7 @@ class Model {
         $vars = $reflection->getProperties(ReflectionProperty::IS_PRIVATE);
         $array = [];
         foreach ($vars as $pvt) {
-            $method = "get".ucwords($pvt->name);
-            $array[$pvt->name] = $this->$method();
+            $array[$pvt->name] = $this->getValue($reflection, $pvt->name);
         }
         
         return $array;

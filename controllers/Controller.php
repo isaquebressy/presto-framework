@@ -64,8 +64,7 @@ class Controller {
         
         if (!$error) {
             foreach ($array as $key => $value) {
-                $set = "set".ucfirst($key);
-                $this->model->$set($value);
+                $this->model->set($key, $value);
             }
             
             $result = $this->model->post();
@@ -85,8 +84,7 @@ class Controller {
         
         if (!$error) {
             foreach ($array as $key => $value) {
-                $set = "set".ucfirst($key);
-                $this->model->$set($value);
+                $this->model->set($key, $value);
             }
             
             $result = $this->model->put();

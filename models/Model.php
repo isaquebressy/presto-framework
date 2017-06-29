@@ -176,7 +176,7 @@ class Model {
     /*
      * Return the table name. The class name in the plural
      */
-    private function getTable() {
+    protected function getTable() {
         return strtolower(get_class($this))."s";
     }
 }

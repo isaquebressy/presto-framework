@@ -91,14 +91,18 @@ class Model {
     public function post() {
         $sql = "INSERT INTO {$this->getTable()} (";
         foreach (array_merge(array_keys($this->getChildVars()),array_keys($this->getPrivates())) as $key) {
-            $sql .= "$key,";
+            if (Inflect::pluralize($key) != $key) {
+                $sql .= "$key,";
+            }
         }
         
         $sql = rtrim($sql, ',');
         
         $sql .= ") VALUES (";
-        foreach (array_merge($this->getChildVars(),$this->getPrivates()) as $value) {
-            $sql .= "'$value',";
+        foreach (array_merge($this->getChildVars(),$this->getPrivates()) as $key => $value) {
+            if (Inflect::pluralize($key) != $key) {
+                $sql .= "'$value',";
+            }
         }
         
         $sql = rtrim($sql, ',');

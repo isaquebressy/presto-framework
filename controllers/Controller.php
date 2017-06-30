@@ -75,7 +75,7 @@ class Controller {
         if (isset($query) && isset($query[0])) {
             $this->model->setId($query[0]);
         } else {
-            die("Erro! Identificador não informado!");
+            die("Error! Id not specified!");
         }
         
         $data = file_get_contents("php://input");
@@ -95,7 +95,7 @@ class Controller {
         if (isset($query) && isset($query[0])) {
             $this->model->setId($query[0]);
         } else {
-            die("Erro! Identificador não informado!");
+            die("Error! Id not specified!");
         }
         
         $result = $this->model->delete();

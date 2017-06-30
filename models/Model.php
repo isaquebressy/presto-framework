@@ -35,20 +35,34 @@ class Model {
         return $p->getValue($this);
     }
     
-    public function get() {
+    public function get($params = null) {
+        $plurals = [];
         $this->getTable();
         
         $sql = "SELECT id,";
         
         foreach (array_keys($this->getChildVars()) as $key) {
-            $sql .= "$key,";
+            if (Inflect::pluralize($key) === $key) {
+                $plurals[] = $key;
+            } else {
+                $sql .= "$key,";
+            }
         }
         
         $sql = rtrim($sql, ',');
         $sql .= " FROM {$this->getTable()} WHERE 1=1";
         if (isset($this->id) && $this->id != null) {
             $sql .= " AND id=$this->id";
-        } 
+        }
+        
+        if ($params != null and is_array($params)) {
+            foreach ($params as $key => $value) {
+                // search for parameters...
+
+                $sql .= " AND $key=$value";
+            }
+        }
+        
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
 
@@ -57,8 +71,18 @@ class Model {
             if(!$result) {
                 $result = null;
             }
+            $array[] = &$result;
         } else {
             $result = $stmt->fetchAll();
+            $array = &$result;
+        }
+        
+        for ($i = 0; $i < count($array); $i++) {
+            foreach ($plurals as $property) {
+                $className = Inflect::singularize($property);
+                $param = [Inflect::singularize($this->getTable())."_id" => $array[$i]['id']];
+                $array[$i][$property] = (new $className)->get($param);
+            }
         }
         
         return $result;
@@ -87,7 +111,7 @@ class Model {
     
     public function put() {
         if ($this->is_empty()) {
-            die("Erro! Parâmetros insuficientes");
+            die("Error! Insufficient parameters!");
         }
         
         try {
@@ -116,13 +140,13 @@ class Model {
 
             $stmt->execute();
         } catch (Exception $e){
-            echo 'Exceção capturada: ',  $e->getMessage(), "\n";
+            echo 'Exception: ',  $e->getMessage(), "\n";
         }
     }
     
      public function delete() {
         if (!$this->id) {
-            die("Erro! Identificador não informado!");
+            die("Errro! Id not specified!");
         }
         
         $sql = "DELETE FROM {$this->getTable()} WHERE id = :id";
@@ -177,6 +201,6 @@ class Model {
      * Return the table name. The class name in the plural
      */
     protected function getTable() {
-        return strtolower(get_class($this))."s";
+        return Inflect::pluralize(strtolower(get_class($this)));
     }
 }

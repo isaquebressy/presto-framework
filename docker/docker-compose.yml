@@ -7,6 +7,8 @@ services:
         environment:
             MYSQL_ROOT_PASSWORD: example
             MYSQL_DATABASE: restphullp
+        volumes:
+            - data:/var/lib/mysql
     adminer:
         image: adminer
         ports:
@@ -20,3 +22,5 @@ services:
             - ../:/var/www/html
         depends_on:
             - db
+volumes:
+    data:

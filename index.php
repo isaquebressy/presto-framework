@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Startup the application
  *
@@ -20,7 +21,7 @@ if (in_array($_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1'))) {
 } else {
     define('ENVIROMENT', 'PROD');
 }
- 
+
 
 require_once HOME . DS . 'config.php';
 require_once HOME . DS . 'utilities' . DS . 'bootstrap.php';
@@ -31,17 +32,16 @@ require_once HOME . DS . 'utilities' . DS . 'bootstrap.php';
  * @param $class The name of the class required
  * @return 
  */
-function __autoload($class)
-{    
+function __autoload($class) {
     if (file_exists(HOME . DS . 'utilities' . DS . $class . '.php')) {
-        include HOME . DS . 'utilities' . DS 
-            . $class . '.php';
+        include HOME . DS . 'utilities' . DS
+                . $class . '.php';
     } else if (file_exists(HOME . DS . 'models' . DS . $class . '.php')) {
-        include HOME . DS . 'models' . DS 
-            . $class . '.php';
+        include HOME . DS . 'models' . DS
+                . $class . '.php';
     } else if (file_exists(HOME . DS . 'controllers' . DS . $class . '.php')) {
-        include HOME . DS . 'controllers' . DS 
-            . $class . '.php';
+        include HOME . DS . 'controllers' . DS
+                . $class . '.php';
     } else {
         http_response_code(500);
     }

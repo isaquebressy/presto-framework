@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file has many functionalities to solve 
  * compatibility issues
@@ -11,7 +12,6 @@
  *  @version  GIT: 0.0.1
  *  @license  GNU
  */
-
 /**
  * Provide compatibility with the versions 
  * after 5.4.0 
@@ -24,18 +24,18 @@ if (!function_exists('http_response_code')) {
      *
      * @return The current code
      */
-    function http_response_code($newcode = null)
-    {
+    function http_response_code($newcode = null) {
         static $code = 200;
         if ($newcode !== null) {
             header(
-                'X-PHP-Response-Code: '
-                . $newcode, true, $newcode
+                    'X-PHP-Response-Code: '
+                    . $newcode, true, $newcode
             );
             if (!headers_sent()) {
-                $code = $newcode; 
+                $code = $newcode;
             }
-        }       
+        }
         return $code;
     }
+
 }

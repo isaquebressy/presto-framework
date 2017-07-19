@@ -1,4 +1,15 @@
 <?php
+/**
+ * DB Connection
+ *
+ *  PHP version 4
+ *
+ *  @category Utility
+ *  @package  Utility
+ *  @author   Isaque Bressy <isaquebressy@gmail.com>
+ *  @license  https://www.gnu.org/licenses/gpl.html GNU
+ *  @version  GIT: 0.0.1
+ */
 
 class Db {
     private static $db;

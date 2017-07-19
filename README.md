@@ -1,7 +1,7 @@
-# restphullp
-## Restphull P - PHP Restfull Framework
+# presto
+## PRESTO - PHP REST Oriented Framework
 
-Restphull P is a framework that give you a easy way to create a restfull apis to communicate to your system.
+PRESTO aka RestphullP is a framework that give you a easy way to create a restful apis to communicate to your system.
 
 The idea behind our framework is simplify the development where the developer has to create only the model (with the properties, getters and setters) and a blank controller to obtain the access to the 4 http methods (GET, POST, PUT and DELETE).
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * This file has many functionalitys to solve 
+ * This file has many functionalities to solve 
  * compatibility issues
  *
  *  PHP version 4

@@ -5,8 +5,10 @@ services:
         image: mysql
         restart: always
         environment:
-            MYSQL_ROOT_PASSWORD: example
-            MYSQL_DATABASE: restphullp
+            MYSQL_ROOT_PASSWORD: presto
+            MYSQL_USER: presto
+            MYSQL_PASSWORD: presto
+            MYSQL_DATABASE: presto
         volumes:
             - data:/var/lib/mysql
     adminer:

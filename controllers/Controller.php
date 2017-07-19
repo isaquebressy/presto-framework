@@ -1,6 +1,6 @@
 <?php
 /**
- * Controllers functionalitys
+ * Controllers functionalities
  *
  *  PHP version 4
  *
@@ -14,12 +14,6 @@
 define('DS', DIRECTORY_SEPARATOR);
 define('HOME', __DIR__);
 
-
-/** 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 class Controller {
     protected $model;
     protected $modelName;
@@ -40,6 +34,7 @@ class Controller {
     private function response_as_json($assoc_array)
     {
         header('Content-Type: application/json;charset=utf-8');
+        header('Access-Control-Allow-Origin:http://localhost:4200');
         echo json_encode($assoc_array);
     }
     

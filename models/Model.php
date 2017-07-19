@@ -1,10 +1,16 @@
 <?php
-
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Models functionalities
+ *
+ *  PHP version 4
+ *
+ *  @category Utility
+ *  @package  Utility
+ *  @author   Isaque Bressy <isaquebressy@gmail.com>
+ *  @license  https://www.gnu.org/licenses/gpl.html GNU
+ *  @version  GIT: 0.0.1
  */
+
 class Model {
     protected $id;
     protected $db;

@@ -1,6 +1,6 @@
 <?php
 /**
- * This file has functionalitys 
+ * This file has functionalities 
  * start application bootstrap
  *
  *  PHP version 4

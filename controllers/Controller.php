@@ -37,7 +37,7 @@ class Controller {
         echo json_encode($assoc_array);
     }
 
-    public function GET($query, $where) {
+    public function GET($query, $where, $limit) {
         if (isset($query) && isset($query[0])) {
             /* o id nao pode ser texto ? como um UUID ? */
             if (count($query) == 1 && is_numeric($query[0])) {
@@ -45,7 +45,7 @@ class Controller {
             }
         }
 
-        $result = $this->model->get($where);
+        $result = $this->model->get($where, $limit);
 
         $this->response_as_json($result);
     }

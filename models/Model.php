@@ -43,7 +43,7 @@ class Model {
         return $p->getValue($this);
     }
 
-    public function get($params = null) {
+    public function get($params = null, $limit = null) {
         $plurals = [];
         $this->getTable();
 
@@ -72,6 +72,10 @@ class Model {
                     $sql .= " AND $key=$value";
                 }
             }
+        }
+
+        if ($limit != null and $limit > 0) {
+            $sql .= " LIMIT $limit";
         }
 
         $stmt = $this->db->prepare($sql);

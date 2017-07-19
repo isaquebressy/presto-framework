@@ -18,14 +18,17 @@ $query = null;
 if (isset($_REQUEST['load'])) {
     $params = array();
     $params = explode('/', $_REQUEST['load']);
-    $qstrings = [];
+    $where = [];
+    $limit = 0;
 
     foreach ($_GET as $key => $value) {
-        if ($key != 'load') {
-            $qstrings[$key] = $value;
+        if ($key != 'load' && $key != 'limit') {
+            $where[$key] = $value;
+        } elseif ($key == 'limit') {
+            $limit = $value;
         }
     }
-
+    
     $singular = Inflect::singularize($params[0]);
     $controller = ucwords(($singular === $params[0]) ? null : $singular);
     $query = array_slice($params, 1);
@@ -41,7 +44,7 @@ if (isset($_REQUEST['load'])) {
         $load = new $controller($modelName, $action);
 
         if (method_exists($load, $action)) {
-            $load->$action($query, $qstrings);
+            $load->$action($query, $where, $limit);
         } else {
             http_response_code(404);
         }

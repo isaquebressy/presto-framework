@@ -1,5 +1,4 @@
-# presto
-## PRESTO - PHP REST Oriented Framework
+# PRESTO - PHP REST Oriented Framework
 
 PRESTO aka RestphullP is a framework that give you a easy way to create a restful apis to communicate to your system.
 

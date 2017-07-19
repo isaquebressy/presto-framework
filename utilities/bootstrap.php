@@ -18,6 +18,13 @@ $query = null;
 if (isset($_REQUEST['load'])) {
     $params = array();
     $params = explode('/', $_REQUEST['load']);
+    $qstrings = [];
+
+    foreach ($_GET as $key => $value) {
+        if ($key != 'load') {
+            $qstrings[$key] = $value;
+        }
+    }
 
     $singular = Inflect::singularize($params[0]);
     $controller = ucwords(($singular === $params[0]) ? null : $singular);
@@ -34,7 +41,7 @@ if (isset($_REQUEST['load'])) {
         $load = new $controller($modelName, $action);
 
         if (method_exists($load, $action)) {
-            $load->$action($query);
+            $load->$action($query, $qstrings);
         } else {
             http_response_code(404);
         }

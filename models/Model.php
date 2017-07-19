@@ -66,8 +66,11 @@ class Model {
         if ($params != null and is_array($params)) {
             foreach ($params as $key => $value) {
                 // search for parameters...
-
-                $sql .= " AND $key=$value";
+                if (!is_numeric($value)) {
+                    $sql .= " AND $key LIKE '%$value%'";
+                } else {
+                    $sql .= " AND $key=$value";
+                }
             }
         }
 

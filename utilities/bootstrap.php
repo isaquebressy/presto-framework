@@ -18,17 +18,26 @@ $query = null;
 if (isset($_REQUEST['load'])) {
     $params = array();
     $params = explode('/', $_REQUEST['load']);
-    $where = [];
-    $limit = 0;
+    $queryString = new QueryString();
 
     foreach ($_GET as $key => $value) {
-        if ($key != 'load' && $key != 'limit') {
-            $where[$key] = $value;
-        } elseif ($key == 'limit') {
-            $limit = $value;
+        switch ($key) {
+            case 'limit':
+                $queryString->limit = $value;
+                break;
+            case 'offset':
+                $queryString->offset = $value;
+                break;
+            case 'sort':
+                $queryString->sort = $value;
+                break;
+            default:
+                if ($key != 'load') {
+                    $queryString->where[$key] = $value;
+                }
         }
     }
-    
+
     $singular = Inflect::singularize($params[0]);
     $controller = ucwords(($singular === $params[0]) ? null : $singular);
     $query = array_slice($params, 1);
@@ -44,7 +53,7 @@ if (isset($_REQUEST['load'])) {
         $load = new $controller($modelName, $action);
 
         if (method_exists($load, $action)) {
-            $load->$action($query, $where, $limit);
+            $load->$action($query, $queryString);
         } else {
             http_response_code(404);
         }

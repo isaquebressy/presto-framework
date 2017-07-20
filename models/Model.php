@@ -43,7 +43,7 @@ class Model {
         return $p->getValue($this);
     }
 
-    public function get($params = null, $limit = null) {
+    public function get($queryString = null) {
         $plurals = [];
         $this->getTable();
 
@@ -63,19 +63,9 @@ class Model {
             $sql .= " AND id=$this->id";
         }
 
-        if ($params != null and is_array($params)) {
-            foreach ($params as $key => $value) {
-                // search for parameters...
-                if (!is_numeric($value)) {
-                    $sql .= " AND $key LIKE '%$value%'";
-                } else {
-                    $sql .= " AND $key=$value";
-                }
-            }
-        }
-
-        if ($limit != null and $limit > 0) {
-            $sql .= " LIMIT $limit";
+        /* Extract query strings into SQL query */
+        if ($queryString != null && is_a($queryString, 'QueryString')) {
+            $sql .= $queryString->getQuery();
         }
 
         $stmt = $this->db->prepare($sql);

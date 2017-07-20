@@ -6,7 +6,7 @@ The idea behind our framework is simplify the development where the developer ha
 
 ### HTTP METHODS
 
-The restfull api consist into 4 methods to controll your system:
+The `PRESTO` API consist into 4 methods to controll your system:
 
 * **GET**: READ the data based in your model. If you want to list all rows from correspondent table, you may call the url without any parameter: ```http://api.myurl/```; else if you want to get a specific row data you may call passing it id: ```http://api.myurl/id```;
 * **POST**: CREATE a new entry on the correspondent model table. You need to pass the required fields through the http content data;
@@ -19,14 +19,31 @@ If you want to use this framework you need to clone this repository or download 
 
 1. Configure your database access in the file ```api/config.php```;
 2. Create your models into the folder ```api/models```;
-3. Create your blank controllers into the folder ```api/controllers```;
+3. Create your controllers into the folder ```api/controllers```;
 
 ### HOW TO TEST
 
 You can test your api using the curl program passing ```-X``` parameter informing the HTTP REQUEST METHOD and passing the data though the ```--data``` parameter when necessary.
-```curl -X POST http://api.myurl/ --data '{"key1":"value1", "key2":"value2"}'```.
+```curl -X POST http://api.myurl/resource --data '{"key1":"value1", "key2":"value2"}'```.
 
 You may use the [Postman Chrome Extension](https://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm) to test the api.
+
+### FEATURES
+
+#### FILTERS
+
+Bring results that matches the values passed in query string
+```
+GET http://api.myurl/resource?field1=valueX&fieldY=valueY
+```
+
+#### SORT
+
+Bring results in ascending or descending order with specified parameter.
+
+```
+GET http://api.myrl/resource?sort=-param
+```
 
 ### JSON TRANSFER
 

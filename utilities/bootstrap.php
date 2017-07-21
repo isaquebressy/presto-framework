@@ -58,4 +58,6 @@ if (isset($_REQUEST['load'])) {
             http_response_code(404);
         }
     }
+} else {
+    http_response_code(404);
 }

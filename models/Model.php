@@ -67,6 +67,10 @@ class Model {
         if ($queryString != null && is_a($queryString, 'QueryString')) {
             $sql .= $queryString->getQuery();
         }
+        
+        if (!$queryString->limit) {
+            $sql .= " LIMIT ". DEF_LIMIT;
+        }
 
         $stmt = $this->db->prepare($sql);
         $stmt->execute();

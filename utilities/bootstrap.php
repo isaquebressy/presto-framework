@@ -43,10 +43,10 @@ if (isset($_REQUEST['load'])) {
     $query = array_slice($params, 1);
 
     $modelName = $controller;
-    $controller .= "Controller";
+    $controller .= ($controller) ? "Controller" : null;
     $controllerFileName = HOME . DS . 'controllers' . DS
             . $controller . '.php';
-
+    
     if (!file_exists($controllerFileName)) {
         http_response_code(404);
     } else {
